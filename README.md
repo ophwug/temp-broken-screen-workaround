@@ -41,6 +41,8 @@ If double-clicking closes too quickly, open Command Prompt in the download folde
 temp-broken-screen-workaround.exe
 ```
 
+If the install does not work, reflash the device at [flash.comma.ai](https://flash.comma.ai/) before retrying.
+
 ## Options
 
 ```text
@@ -77,6 +79,10 @@ The preferred key source order is:
 3. `/home/comma/.ssh/authorized_keys`
 
 If no key source is found, the tool still enables SSH but prints a warning that `GithubSshKeys` was not set.
+
+## Recovery
+
+If this workaround fails or leaves the device in a confusing state, reflash it with [flash.comma.ai](https://flash.comma.ai/) and retry from a clean setup state.
 
 ## macOS and Linux
 
