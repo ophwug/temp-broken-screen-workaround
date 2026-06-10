@@ -33,7 +33,7 @@ It also writes a tee-style install log next to the executable, named like `insta
 
 4. Double-click the executable.
 5. Choose whether to enter the device IP address or scan the local network.
-6. Enter the custom software URL, domain, or `owner/repo` when prompted.
+6. Enter the custom software URL, domain, or `owner/branch` when prompted.
 7. Review the preflight output and let the install run.
 
 If double-clicking closes too quickly, open Command Prompt in the download folder and run:
@@ -67,7 +67,9 @@ temp-broken-screen-workaround.exe --cidr 192.168.1.0/24
 
 - a full URL, such as `https://openpilot-test.comma.ai`
 - a domain, such as `openpilot-test.comma.ai`
-- an owner/repo shorthand, such as `commaai/openpilot`
+- an owner/branch shorthand, such as `sunnypilot/dev`
+
+For `owner/branch` shorthand, `installer.comma.ai` handles the repo selection. The usual fork-installer convention is that the repository name is hardcoded as `openpilot`; full custom URLs can still point at installers that encode a different GitHub repo.
 
 ## What SSH Persistence Does
 

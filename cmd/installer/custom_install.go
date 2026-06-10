@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var ownerRepoPattern = regexp.MustCompile(`^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$`)
+var ownerBranchPattern = regexp.MustCompile(`^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$`)
 
 type customInstallPlan struct {
 	DownloadURL     string
@@ -107,13 +107,13 @@ func runCustomSoftwareInstall(ctx context.Context, cfg Config, report *RunReport
 
 func promptCustomSoftwareURL(reader *bufio.Reader) (string, error) {
 	for {
-		fmt.Fprint(output, "Enter custom software URL, domain, or owner/repo: ")
+		fmt.Fprint(output, "Enter custom software URL, domain, or owner/branch: ")
 		text, _ := reader.ReadString('\n')
 		normalized, err := normalizeCustomSoftwareURL(text)
 		if err == nil {
 			return normalized, nil
 		}
-		fmt.Fprintf(output, "%v. Examples: openpilot-test.comma.ai or commaai/openpilot\n", err)
+		fmt.Fprintf(output, "%v. Examples: openpilot-test.comma.ai or sunnypilot/dev\n", err)
 	}
 }
 
@@ -122,7 +122,7 @@ func normalizeCustomSoftwareURL(input string) (string, error) {
 	if text == "" {
 		return "", fmt.Errorf("custom software URL cannot be empty")
 	}
-	if ownerRepoPattern.MatchString(text) {
+	if ownerBranchPattern.MatchString(text) {
 		return "https://installer.comma.ai/" + text, nil
 	}
 

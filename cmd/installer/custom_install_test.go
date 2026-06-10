@@ -7,7 +7,7 @@ import (
 
 func TestNormalizeCustomSoftwareURL(t *testing.T) {
 	tests := map[string]string{
-		"commaai/openpilot":               "https://installer.comma.ai/commaai/openpilot",
+		"sunnypilot/dev":                  "https://installer.comma.ai/sunnypilot/dev",
 		"openpilot-test.comma.ai":         "https://openpilot-test.comma.ai",
 		"https://openpilot-test.comma.ai": "https://openpilot-test.comma.ai",
 		"http://example.test/path":        "http://example.test/path",
