@@ -10,6 +10,7 @@ During install, the tool:
 - extracts the GitHub repo and branch from the installer
 - applies the known tici/tizi/mici branch migration
 - clones the selected branch into `/data/openpilot`
+- attempts `git lfs pull` when Git LFS is available, but continues if it fails
 - writes `/data/continue.sh`
 - marks openpilot terms accepted and training completed using the installed branch's `system/version.py`
 - sets `SshEnabled=1`

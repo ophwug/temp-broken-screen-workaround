@@ -374,6 +374,12 @@ cd /data/tmppilot
 git checkout "$MIGRATED_BRANCH"
 git reset --hard "origin/$MIGRATED_BRANCH"
 git submodule update --init --recursive
+echo "Step: attempt Git LFS pull"
+if command -v git-lfs >/dev/null 2>&1 || git lfs version >/dev/null 2>&1; then
+  git lfs pull || echo "WARNING: git lfs pull failed; continuing anyway"
+else
+  echo "WARNING: git-lfs is not available; continuing without git lfs pull"
+fi
 echo "Step: move checkout into /data/openpilot"
 STAMP="$(date -u +%Y%m%d-%H%M%S)"
 if [ -e /data/openpilot ]; then

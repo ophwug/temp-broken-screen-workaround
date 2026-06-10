@@ -94,6 +94,8 @@ func TestCustomSoftwareInstallCommandHasRequiredSteps(t *testing.T) {
 	for _, want := range []string{
 		"git clone --progress \"$GIT_URL\" -b \"$MIGRATED_BRANCH\" --depth=1 --recurse-submodules /data/tmppilot",
 		"git submodule update --init --recursive",
+		"git lfs pull || echo \"WARNING: git lfs pull failed; continuing anyway\"",
+		"git-lfs is not available",
 		"mv /data/openpilot \"$BACKUP\"",
 		"mv /data/tmppilot /data/openpilot",
 		"cat > /data/continue.sh",
