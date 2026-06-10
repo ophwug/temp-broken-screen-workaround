@@ -87,6 +87,12 @@ The preferred key source order is:
 
 If no key source is found, the tool still enables SSH but prints a warning that `GithubSshKeys` was not set.
 
+## OS Updates
+
+If the installed branch requires a different AGNOS version than the device is currently running, openpilot's normal launcher should run the AGNOS updater on first start. With a broken screen, the useful signal is network behavior: SSH may disconnect, the device may reboot, and it may take several minutes before SSH comes back.
+
+Wait before retrying SSH. If the device never returns to the network or the install still does not work, reflash it with [flash.comma.ai](https://flash.comma.ai/) and retry from a clean setup state.
+
 ## Recovery
 
 If this workaround fails or leaves the device in a confusing state, reflash it with [flash.comma.ai](https://flash.comma.ai/) and retry from a clean setup state.

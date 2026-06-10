@@ -99,7 +99,8 @@ func runCustomSoftwareInstall(ctx context.Context, cfg Config, report *RunReport
 		return fmt.Errorf("custom install command failed: %w", err)
 	}
 
-	fmt.Fprintln(output, "Custom install requested. Watch the device screen; openpilot should continue from /data/openpilot after the wrapper restarts.")
+	fmt.Fprintln(output, "Custom install requested. openpilot should continue from /data/openpilot after the wrapper restarts.")
+	fmt.Fprintln(output, "If the installed branch needs an AGNOS update, the device may reboot and SSH/network access may disappear temporarily. Wait several minutes before retrying SSH.")
 	fmt.Fprintln(output, "If it still fails, reflash the device with https://flash.comma.ai/ before retrying.")
 	fmt.Fprintln(output, "Share this log and the device state you can observe if you need help.")
 	return nil
