@@ -75,6 +75,8 @@ For `owner/branch` shorthand, `installer.comma.ai` handles the repo selection. T
 
 ## What SSH Persistence Does
 
+SSH is kept enabled so there is still a simple network path back into the device after install. With a broken or unusable screen, changing settings or recovering from a bad state through the UI may not be practical. Without SSH, the remaining options may require debug/developer hardware or other setup that is currently non-trivial.
+
 openpilot uses the persistent `SshEnabled` param to control the developer SSH toggle, and `GithubSshKeys` as the authorized key material. This tool writes `SshEnabled=1` and preserves a key source into `GithubSshKeys` when one exists.
 
 The preferred key source order is:
