@@ -1,0 +1,9 @@
+# Binaries
+.DS_Store
+install-*.txt
+temp-broken-screen-workaround.exe
+temp-broken-screen-workaround-darwin
+temp-broken-screen-workaround-linux
+c2-neos-alt-fix-install.exe
+c2-neos-alt-fix-install-darwin
+c2-neos-alt-fix-install-linux

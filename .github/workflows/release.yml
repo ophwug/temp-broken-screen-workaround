@@ -1,0 +1,44 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Test
+        run: go test ./...
+
+      - name: Build application
+        run: |
+          make \
+            VERSION="$(git describe --tags --always --dirty)" \
+            COMMIT="${GITHUB_SHA::7}" \
+            DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Create or Update Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest Build
+          body: "Latest automated build of the broken-screen openpilot install workaround. Windows users should download temp-broken-screen-workaround.exe."
+          files: |
+            temp-broken-screen-workaround.exe
+            temp-broken-screen-workaround-darwin
+            temp-broken-screen-workaround-linux
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
