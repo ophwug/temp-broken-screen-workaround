@@ -1,6 +1,8 @@
-# Broken Screen openpilot Install Workaround
+# Broken Screen openpilot Install and Enable Workaround
 
-This is a temporary workaround tool for installing openpilot on comma devices where the setup screen may be malfunctioning.
+This is a temporary workaround tool for installing and enabling openpilot on comma devices where the setup screen may be malfunctioning.
+
+Installing openpilot is only part of setup. openpilot still cannot be enabled until the on-device setup flow accepts terms and completes driver training. A broken or unusable screen can block those final setup gates. This tool works around that by installing over SSH and setting the same persistent params that make openpilot enable-able.
 
 It scans your local network, finds comma/openpilot devices that accept SSH as `comma`, and installs a custom software URL without launching the on-device setup installer UI.
 
@@ -12,12 +14,12 @@ During install, the tool:
 - clones the selected branch into `/data/openpilot`
 - attempts `git lfs pull` when Git LFS is available, but continues if it fails
 - writes `/data/continue.sh`
-- marks openpilot terms accepted and training completed using the installed branch's `system/version.py`
+- marks openpilot terms accepted and training completed using the installed branch's `system/version.py`, so openpilot can be enabled without finishing those screens on-device
 - sets `SshEnabled=1`
 - preserves `GithubSshKeys` from existing params, `/usr/comma/setup_keys`, or `/home/comma/.ssh/authorized_keys` when available
 - restarts the comma wrapper
 
-Use this only when you understand why bypassing the setup UI is needed.
+Use this only when you understand why bypassing setup/onboarding is needed.
 
 The tool prints its own build version at startup. Include that line when sharing output.
 

@@ -56,13 +56,13 @@ func main() {
 		defer logFile.Close()
 	}
 
-	fmt.Fprintln(output, "openpilot broken screen install workaround")
+	fmt.Fprintln(output, "openpilot broken screen install and enable workaround")
 	fmt.Fprintf(output, "Version: %s\n", toolVersion())
 	if cfg.LogPath != "" {
 		fmt.Fprintf(output, "Install log: %s\n", cfg.LogPath)
 	}
 	fmt.Fprintln(output, "------------------------------------------")
-	fmt.Fprintf(output, "This tool installs an openpilot custom software URL over SSH when the device setup screen cannot be used reliably.\n\n")
+	fmt.Fprintf(output, "This tool installs and makes openpilot enable-able over SSH when the device setup screen cannot be used reliably.\n\n")
 
 	if cfg.IP == "" && cfg.CIDR == "" {
 		cfg = promptStartupMenu(cfg)

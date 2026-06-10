@@ -50,7 +50,7 @@ func runCustomSoftwareInstall(ctx context.Context, cfg Config, report *RunReport
 	fmt.Fprintln(output, "---------------------------------------")
 	fmt.Fprintln(output, "WARNING: Only use this when directed by knowledgeable openpilot/comma users.")
 	fmt.Fprintln(output, "This bypasses the setup installer UI, writes /data/openpilot, and writes /data/continue.sh.")
-	fmt.Fprintln(output, "It also marks openpilot terms/training complete and keeps SSH enabled for broken-screen recovery.")
+	fmt.Fprintln(output, "It also marks openpilot terms/training complete so openpilot can be enabled, and keeps SSH enabled for broken-screen recovery.")
 	fmt.Fprintln(output, "It may replace an existing /data/openpilot checkout after a yes/no prompt.")
 	fmt.Fprintf(output, "Target device: %s\n", target.IP)
 	fmt.Fprintf(output, "Custom software URL: %s\n\n", customURL)
