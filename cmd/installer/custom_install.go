@@ -95,12 +95,13 @@ func runCustomSoftwareInstall(ctx context.Context, cfg Config, report *RunReport
 	installOut, err := executeCommand(client, customSoftwareInstallCommand(customURL, plan.GitURL, plan.MigratedBranch), 45*time.Minute)
 	fmt.Fprintln(output, "Custom install command output:")
 	fmt.Fprintln(output, indentBlock(installOut, "  "))
+	_ = client.Close()
 	if err != nil {
 		return fmt.Errorf("custom install command failed: %w", err)
 	}
 
 	fmt.Fprintln(output, "Custom install requested. openpilot should continue from /data/openpilot after the wrapper restarts.")
-	fmt.Fprintln(output, "If the installed branch needs an AGNOS update, the device may reboot and SSH/network access may disappear temporarily. Wait several minutes before retrying SSH.")
+	monitorPostInstall(ctx, cfg, ip.To4())
 	fmt.Fprintln(output, "If it still fails, reflash the device with https://flash.comma.ai/ before retrying.")
 	fmt.Fprintln(output, "Share this log and the device state you can observe if you need help.")
 	return nil
@@ -455,6 +456,14 @@ test "$(cat /data/params/d/SshEnabled)" = "1" || { echo "ERROR: SshEnabled was n
 cd /data/openpilot
 echo "Installed branch: $(git rev-parse --abbrev-ref HEAD)"
 echo "Installed commit: $(git rev-parse --short HEAD)"
+echo "Step: check AGNOS version expectation"
+CURRENT_AGNOS="$(cat /VERSION 2>/dev/null || true)"
+EXPECTED_AGNOS="$(bash -lc 'cd /data/openpilot && unset AGNOS_VERSION && source launch_env.sh >/dev/null 2>&1 && printf "%s" "$AGNOS_VERSION"' 2>/dev/null || true)"
+echo "Current AGNOS: ${CURRENT_AGNOS:-unknown}"
+echo "Expected AGNOS: ${EXPECTED_AGNOS:-unknown}"
+if [ -n "$CURRENT_AGNOS" ] && [ -n "$EXPECTED_AGNOS" ] && [ "$CURRENT_AGNOS" != "$EXPECTED_AGNOS" ]; then
+  echo "AGNOS update likely needed; openpilot launcher should run the normal AGNOS updater after restart"
+fi
 echo "Step: restart wrapper"
 tmux new-session -s comma -d /usr/comma/comma.sh || echo "WARNING: could not start tmux wrapper; reboot or launch /usr/comma/comma.sh manually"
 echo "OK: custom software install replacement complete"`

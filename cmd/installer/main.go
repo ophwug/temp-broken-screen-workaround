@@ -30,6 +30,7 @@ type Config struct {
 	CIDR              string
 	Parallel          int
 	Timeout           time.Duration
+	MonitorDuration   time.Duration
 	LogPath           string
 	CustomSoftwareURL string
 }
@@ -96,6 +97,7 @@ func parseFlags() Config {
 	flag.StringVar(&cfg.CIDR, "cidr", "", "scan a specific IPv4 CIDR instead of auto-detecting the active LAN")
 	flag.IntVar(&cfg.Parallel, "parallel", defaultParallel, "maximum concurrent SSH probes")
 	flag.DurationVar(&cfg.Timeout, "timeout", defaultScanDelay, "timeout for each SSH probe, e.g. 750ms or 2s")
+	flag.DurationVar(&cfg.MonitorDuration, "monitor-duration", 10*time.Minute, "post-install SSH/network monitor duration; use 0 to disable")
 	flag.StringVar(&cfg.LogPath, "log", "", "write a tee-style install log to this file; default is install-<timestamp>.txt next to the executable")
 	flag.StringVar(&cfg.CustomSoftwareURL, "custom-software-url", "", "install a custom software URL without launching the setup installer UI")
 	flag.Parse()

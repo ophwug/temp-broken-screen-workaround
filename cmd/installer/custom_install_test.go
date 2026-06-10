@@ -104,12 +104,32 @@ func TestCustomSoftwareInstallCommandHasRequiredSteps(t *testing.T) {
 		"\"HasAcceptedTerms\": versions[\"terms_version\"]",
 		"\"CompletedTrainingVersion\": versions[\"training_version\"]",
 		"\"SshEnabled\": \"1\"",
+		"Current AGNOS:",
+		"Expected AGNOS:",
+		"AGNOS update likely needed",
 		"GithubSshKeys",
 		"/usr/comma/setup_keys",
 		"tmux new-session -s comma -d /usr/comma/comma.sh",
 	} {
 		if !strings.Contains(cmd, want) {
 			t.Fatalf("install command missing %q:\n%s", want, cmd)
+		}
+	}
+}
+
+func TestPostInstallStatusCommandHasRequiredChecks(t *testing.T) {
+	cmd := postInstallStatusCommand()
+	for _, want := range []string{
+		"cat /VERSION",
+		"source launch_env.sh",
+		"AGNOS_STATUS",
+		"launch_chffrplus",
+		"manager.py",
+		"/tmp/launch_log",
+		"RECENT_LAUNCH_LOG",
+	} {
+		if !strings.Contains(cmd, want) {
+			t.Fatalf("post-install status command missing %q:\n%s", want, cmd)
 		}
 	}
 }
