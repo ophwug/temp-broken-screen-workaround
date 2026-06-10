@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-const customInstallConfirmation = "INSTALL CUSTOM SOFTWARE"
-
 var ownerRepoPattern = regexp.MustCompile(`^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$`)
 
 type customInstallPlan struct {
@@ -53,7 +51,7 @@ func runCustomSoftwareInstall(ctx context.Context, cfg Config, report *RunReport
 	fmt.Fprintln(output, "WARNING: Only use this when directed by knowledgeable openpilot/comma users.")
 	fmt.Fprintln(output, "This bypasses the setup installer UI, writes /data/openpilot, and writes /data/continue.sh.")
 	fmt.Fprintln(output, "It also marks openpilot terms/training complete and keeps SSH enabled for broken-screen recovery.")
-	fmt.Fprintln(output, "It may replace an existing /data/openpilot checkout after explicit confirmation.")
+	fmt.Fprintln(output, "It may replace an existing /data/openpilot checkout after a yes/no prompt.")
 	fmt.Fprintf(output, "Target device: %s\n", target.IP)
 	fmt.Fprintf(output, "Custom software URL: %s\n\n", customURL)
 
@@ -93,14 +91,6 @@ func runCustomSoftwareInstall(ctx context.Context, cfg Config, report *RunReport
 			return nil
 		}
 	}
-
-	fmt.Fprintf(output, "Type %q to install %s branch %s: ", customInstallConfirmation, plan.GitURL, plan.MigratedBranch)
-	confirmation, _ := reader.ReadString('\n')
-	if strings.TrimSpace(confirmation) != customInstallConfirmation {
-		fmt.Fprintln(output, "Custom install aborted: confirmation did not match. No changes were made.")
-		return nil
-	}
-	fmt.Fprintln(output)
 
 	installOut, err := executeCommand(client, customSoftwareInstallCommand(customURL, plan.GitURL, plan.MigratedBranch), 45*time.Minute)
 	fmt.Fprintln(output, "Custom install command output:")

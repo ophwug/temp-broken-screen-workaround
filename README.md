@@ -33,7 +33,7 @@ It also writes a tee-style install log next to the executable, named like `insta
 4. Double-click the executable.
 5. Choose whether to enter the device IP address or scan the local network.
 6. Enter the custom software URL, domain, or `owner/repo` when prompted.
-7. Review the preflight output, then type the exact confirmation phrase to install.
+7. Review the preflight output and let the install run.
 
 If double-clicking closes too quickly, open Command Prompt in the download folder and run:
 
@@ -50,7 +50,7 @@ temp-broken-screen-workaround.exe
 --timeout <duration> SSH probe timeout. Default: 750ms.
 --log <path>         Write the install log to a specific path. Use --log - to disable.
 --custom-software-url <url>
-                    Install this custom software URL without prompting.
+                    Use this custom software URL instead of asking interactively.
 ```
 
 Examples:
