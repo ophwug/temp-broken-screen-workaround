@@ -6,6 +6,8 @@ Installing openpilot is only part of setup. openpilot still cannot be enabled un
 
 It scans your local network, finds comma/openpilot devices that accept SSH as `comma`, and installs a custom software URL without launching the on-device setup installer UI.
 
+comma devices only expose this accepting SSH state from the clean setup environment, such as after a reset, a flash from [flash.comma.ai](https://flash.comma.ai/), or a software uninstall. Devices with openpilot already installed normally do not leave SSH open for this tool to find.
+
 During install, the tool:
 
 - downloads the same custom installer response that setup would use
@@ -29,15 +31,16 @@ It also writes a tee-style install log next to the executable, named like `insta
 ## Windows Quick Start
 
 1. Connect your Windows computer to the same Wi-Fi/network as the comma device.
-2. If the device screen is usable enough to show the IP address, note it from **Advanced internet settings**.
-3. Download the latest Windows executable:
+2. Start from a reset device, a device flashed from [flash.comma.ai](https://flash.comma.ai/), or a software-uninstalled device. If openpilot is already installed, the device normally will not accept SSH for this workaround.
+3. If the device screen is usable enough to show the IP address, note it from **Advanced internet settings**.
+4. Download the latest Windows executable:
 
    [temp-broken-screen-workaround.exe](https://github.com/ophwug/temp-broken-screen-workaround/releases/latest/download/temp-broken-screen-workaround.exe)
 
-4. Double-click the executable.
-5. Choose whether to enter the device IP address or scan the local network.
-6. Enter the custom software URL, domain, or `owner/branch` when prompted.
-7. Review the preflight output and let the install run.
+5. Double-click the executable.
+6. Choose whether to enter the device IP address or scan the local network.
+7. Enter the custom software URL, domain, or `owner/branch` when prompted.
+8. Review the preflight output and let the install run.
 
 If double-clicking closes too quickly, open Command Prompt in the download folder and run:
 

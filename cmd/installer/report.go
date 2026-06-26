@@ -19,7 +19,8 @@ func printTextReport(report *RunReport) {
 
 	if reachable == 0 {
 		fmt.Fprintln(output, "No comma/openpilot device accepted SSH with the embedded comma key.")
-		fmt.Fprintln(output, "Make sure the device is powered on, on the same network, and still exposes SSH as user comma.")
+		fmt.Fprintln(output, "Make sure the device is powered on, on the same network, and in the clean setup state after a reset, flash from https://flash.comma.ai/, or software uninstall.")
+		fmt.Fprintln(output, "Devices with openpilot already installed normally do not leave SSH open for this tool to find.")
 		fmt.Fprintln(output)
 		if report.LogPath != "" {
 			fmt.Fprintf(output, "Install log written to: %s\n", report.LogPath)
